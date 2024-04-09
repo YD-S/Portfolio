@@ -38,9 +38,12 @@ body {
 }
 
 .blob {
+    overflow-x: hidden;
     position: fixed;
+    top : 10%;
+    left: 0;
     fill: #0055c7;
-    width: 50vmax;
+    width: 25vmax;
     z-index: -1;
     animation: move 30s ease-in-out infinite;
     transform-origin: 50% 50%;

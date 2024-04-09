@@ -13,7 +13,7 @@ export default function Projects() {
                     projectLink={"https://www.google.com"}
                     description={"Responsive HTML/CSS layout for online furniture store. HTML5,\n" + "                  CSS3 (SCSS)"}
                     image={Project1}
-                    title={"Furniture store landing page"}
+                    title={"Furniture store landing page done in React.js"}
                 />
                 <Project
                     projectLink={"https://www.google.com"}
