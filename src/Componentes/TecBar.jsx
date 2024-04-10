@@ -9,7 +9,7 @@ export default function TecBar({ h2, p, width = "w-full"}) {
                 <h2 className="font-semibold">{h2}</h2>
                 <p className="text-gray-500">{p}</p>
             </div>
-            <span className={`${width} h-2 mt-2 bg-gradient-to-t from-blue-500 to-cyan-500 block rounded-md animateBars` }>
+            <span className={`${width} h-2 mt-2 bg-gradient-to-r from-purple-500 to-blue-500 block rounded-md animateBars` }>
                 <style>
                     {`
                     @keyframes slide {

@@ -10,7 +10,7 @@ body {
 
 .gradiant-text {
     -webkit-background-clip: text;
-    @apply bg-gradient-to-t from-blue-500 to-cyan-500 text-transparent;
+    @apply bg-gradient-to-r from-purple-500 to-blue-500 text-transparent;
     overflow: hidden;
     border-right: 2px solid #fff;
     animation: typing-text steps(500) 3.5s infinite, blink ease 0.3s infinite;
@@ -42,7 +42,7 @@ body {
     position: fixed;
     top : 10%;
     left: 0;
-    fill: #0055c7;
+    fill: #0052c0;
     width: 25vmax;
     z-index: -1;
     animation: move 30s ease-in-out infinite;
@@ -56,4 +56,10 @@ body {
     78%  { transform: scale(1.3) translate(0vw, 50vh) rotate(-20deg); }
     80%  { transform: scale(1.3) translate(0vw, 50vh) rotate(-20deg); }
     100% { transform: scale(1)   translate(10px, -30px); }
+}
+
+.cardBorder {
+    border-image: linear-gradient(0.25turn, #a855f7, #3b82f6) 30;
+    border-width: 1px;
+    border-style: solid;
 }

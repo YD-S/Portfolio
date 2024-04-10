@@ -1,6 +1,6 @@
 
 export default function AboutContent({children, year, id}) {
-    let classes = "pl-24 relative before:w-4 before:h-4 before:bg-gradient-to-t before:from-blue-500 before:to-cyan-500 before:absolute before:rounded-full before:left-[58px]"
+    let classes = "pl-24 relative before:w-4 before:h-4 before:bg-gradient-to-r before:from-purple-500 before:to-blue-500 before:absolute before:rounded-full before:left-[58px]"
     if (id !== 1)
         classes += " mt-24"
     return (
