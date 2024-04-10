@@ -24,7 +24,7 @@ export default function Header({scrolling}) {
                       <ul className="flex gap-4">
                           {elements.map((element, index) => (
                               <li key={index}>
-                              <a href={element.link} className={"text-gray-200 hover:text-blue-500 cursor-pointer"}>{element.name}</a>
+                              <a href={element.link} className={"text-gray-200 hover:text-blue-500 cursor-pointer hover-grad-txt"}>{element.name}</a>
                               </li>
                               ))}
                       </ul>

@@ -4,7 +4,7 @@ export default function Intro() {
         <div>
             <h2 className="font-bold text-4xl">Hello, I'm Yash,</h2>
             <div>
-                <h2 className="font-bold text-4xl mt-5 gradiant-text">FullStack developer</h2>
+                <h2 className="font-bold text-4xl mt-3 gradiant-text anim-typewriter">FullStack developer</h2>
             </div>
             <div>
                 <p className="mt-4 text-gray-200">

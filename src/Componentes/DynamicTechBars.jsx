@@ -24,12 +24,12 @@ export default function DynamicTechBars() {
             width : "w-[75%]"
         },
         {
-            name : "UI design",
-            para  : "Medium",
-            width : "w-[50%]"
+            name : "C/C++",
+            para  : "High",
+            width : "w-[65%]"
         },
         {
-            name : "C/C++",
+            name : "UI design",
             para  : "Medium",
             width : "w-[50%]"
         }
