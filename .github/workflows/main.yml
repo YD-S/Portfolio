@@ -23,6 +23,7 @@ jobs:
         # The request method, basically one of GET, POST, PUT, PATCH
         # List of status codes to be accepted, else it is considerred to be failed
         # Headers object
+        method: POST
         headers: '{"Content-Type": "application/json","Authorization": "Bearer 9zS3g6BsIWXGLtAV3TjH1McnRxuBu6"}'
         # Params object
         # Body object
