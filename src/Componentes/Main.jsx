@@ -8,6 +8,7 @@ import AdditionalSkills from "./AdditionalSkills.jsx";
 import Intro from "./Intro.jsx";
 
 export default function Main() {
+
     return (
         <main className="relative mt-28">
             {/* Intro/Banner section */}
@@ -17,10 +18,10 @@ export default function Main() {
                     <Intro />
                     <div className="relative">
                         <div
-                            className="after:bg-[url('./large-long.png')]
+                            className="after:bg-[url('/large-long.png')]
                             after:bg-contain after:block after:bg-no-repeat
                             after:w-[420px] after:h-[320px] after:absolute after:top-0
-                            after:-left-20 sm:after:-left-40 before:bg-[url('./small.png')]
+                            after:-left-20 sm:after:-left-40 before:bg-[url('/small.png')]
                             before:bg-contain before:block before:bg-no-repeat before:w-[220px]
                             before:h-[220px] before:absolute before:bottom-0 before:-right-10"
                         >
