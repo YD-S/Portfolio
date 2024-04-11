@@ -31,7 +31,7 @@ function App() {
         <Footer />
         {
           scrolling && (
-            <button className="fixed block right-8 bottom-0 w-24" onClick={() => {
+            <button className="fixed block right-8 bottom-0 w-24 max-sm:bottom-12" onClick={() => {
               window.scrollTo(0,0);
             }}>
               <img src={ArrowDown}  alt={"ArrowDown"} />
