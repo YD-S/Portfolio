@@ -1,5 +1,5 @@
 import Section from "./Section.jsx";
-import Porfile from "../assets/Photo.png";
+import PorfilePic from "../assets/Photo.png";
 import Projects from "./Projects";
 import DynamicTechBars from "./DynamicTechBars";
 import JointAboutContent from "./JointAboutContent";
@@ -24,7 +24,7 @@ export default function Main() {
                             before:bg-contain before:block before:bg-no-repeat before:w-[220px]
                             before:h-[220px] before:absolute before:bottom-0 before:-right-10"
                         >
-                            <img src={Porfile} className="relative z-10 w-[280px] m-auto sm:w-[650px]" alt={"ProfilePic"}/>
+                            <img src={PorfilePic} className="relative z-10 w-[280px] m-auto sm:w-[650px]" alt={"ProfilePic"}/>
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,9 @@ export default function Main() {
                 <div className="container m-auto px-4">
                     <h2 className="text-2xl font-semibold">About me</h2>
                     <div
-                        className="mt-12 relative before:absolute before:top-0 before:left-16 before:rounded-full before:bottom-10 sm:before:bottom-2 before:w-1 before:bg-white">
+                        className="mt-12 relative before:absolute before:top-0 before:left-16 
+                        before:rounded-full before:bottom-10 sm:before:bottom-2 before:w-1 before:bg-white"
+                        >
                         <JointAboutContent />
                     </div>
                 </div>
