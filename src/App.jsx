@@ -26,7 +26,7 @@ function App() {
   return (
     <>
       <div className="max-w-4xl m-auto relative">
-        <Header scrolling={scrolling} />
+        <Header />
         <Main />
         <Footer />
         {
