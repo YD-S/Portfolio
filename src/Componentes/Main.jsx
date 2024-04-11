@@ -49,8 +49,10 @@ export default function Main() {
                     <h2 className="text-2xl font-semibold">
                         Additional technologies and skills
                     </h2>
+                    <div className="max-sm:flex">
                     <AdditionalSkills data={AdditionalSkillsData[0]}/>
                     <AdditionalSkills data={AdditionalSkillsData[1]}/>
+                    </div>
                 </div>
             </Section>
             <Section className="py-8" id="aboutme">
