@@ -19,8 +19,7 @@ WORKDIR /app
 COPY .env-sample .env
 
 # change the VITE_GITHUB_ACCESS_TOKEN value to the one you want to use from stack.env
-RUN sed -i "s/VITE_GITHUB_ACCESS_TOKEN=.*/VITE_GITHUB_ACCESS_TOKEN=$VITE_GITHUB_ACCESS_TOKEN/" .env
-
+RUN sed -i 's/tokenvalue/'$VITE_GITHUB_ACCESS_TOKEN'/g' .env
 
 RUN npm install
 
