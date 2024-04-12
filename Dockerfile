@@ -2,9 +2,9 @@
 FROM nginx:latest
 
 
-ARG VITE_GITHUB_ACCESS_TOKEN
+ARG TOKEN
 
-ENV VITE_GITHUB_ACCESS_TOKEN=$VITE_GITHUB_ACCESS_TOKEN
+ENV VITE_GITHUB_ACCESS_TOKEN=$TOKEN
 
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get install -y npm openssl
