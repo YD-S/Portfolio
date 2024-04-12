@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Header from "./Componentes/Header.jsx";
 import Footer from "./Componentes/Footer.jsx";
 import Main from "./Componentes/Main.jsx";
+import {ApolloProvider} from "@apollo/client";
+import {client} from "./Componentes/ApolloClient.jsx";
 
 function App() {
   const [scrolling, setScrolling] = useState(false);
@@ -24,14 +26,14 @@ function App() {
   }, [])
 
   return (
-    <>
+    <ApolloProvider client={client}>
       <div className="max-w-4xl m-auto relative">
-        <Header scrolling={scrolling} />
+        <Header />
         <Main />
         <Footer />
         {
           scrolling && (
-            <button className="fixed block right-8 bottom-0 w-24" onClick={() => {
+            <button className="fixed block right-8 bottom-0 w-24 max-sm:bottom-12" onClick={() => {
               window.scrollTo(0,0);
             }}>
               <img src={ArrowDown}  alt={"ArrowDown"} />
@@ -39,7 +41,7 @@ function App() {
           )
         }
       </div>
-    </>
+    </ApolloProvider>
   );
 }
 
