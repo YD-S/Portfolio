@@ -32,7 +32,7 @@ export default function Main() {
             </Section>
             {/* Projects section */}
             <Section id="projects">
-                <Projects/>
+                <Projects />
             </Section>
             {/* Technoglies section */}
             <Section className="py-10" id="technologies">

@@ -6,7 +6,7 @@ export default function Project({projectLink, title, description, image}) {
     };
 
     return (
-        <div className="p-5 flex-1 backdrop-blur cardBorder w-72" >
+        <div className="p-5 flex-1 backdrop-blur cardBorder w-[100%] h-[100%] text-center" >
             <img src={image} className="w-full h-auto" alt={"ProjectImg"}/>
             <h3 className="text-2xl font-semibold mt-8">{title}</h3>
             <p className="text-gray-400 text-sm mt-2">{description}</p>
