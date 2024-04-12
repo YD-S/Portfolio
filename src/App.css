@@ -67,12 +67,11 @@ body {
 }
 
 .hover-grad-txt {
-    background-size: 0% 3px;
+    background-size: 0 3px;
     background-image: linear-gradient(to right, #a855f7, #3b82f6);
     background-repeat: no-repeat;
     background-position: bottom left;
     transition: background-size 300ms ease;
-    padding: 0.5rem;
 }
 
 .hover-grad-txt:hover {
