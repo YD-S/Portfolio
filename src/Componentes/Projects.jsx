@@ -1,9 +1,13 @@
 import Project from "./Project.jsx";
 import {useEffect, useState} from "react";
+import { PinContainer } from "./ui/3d-pin";
+import testlogo from "../assets/testing.jpg";
+
 
 export default function Projects() {
 
     const [nodes, setNodes] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         getAllNodes();
@@ -25,28 +29,30 @@ export default function Projects() {
             .then(r => r.json())
             .then(data => {
                     setNodes(data.user.pinnedItems.nodes);
-                    console.log(data);
+                    setLoading(false);
                 }
             );
     }
 
+    console.log(loading);
 
     return (
         <div className="container m-auto px-4 sm:py-12">
             <h2 className="text-2xl font-semibold">Projects</h2>
-            <div className="grid grid-cols-3 sm:flex-row gap-10 mt-11 max-sm:grid-cols-1 max-md:grid-cols-2">
-                {nodes.map((project, index) => {
+            <div className="grid grid-cols-2 gap-y-12 mt-8 max-md:grid-cols-2 max-sm:grid-cols-1">
+                {!loading && nodes.map((project, index) => {
                     return (
                         <Project
                             key={index}
                             projectLink={project.url}
+                            title={project.name}
                             description={project.description}
                             image={project.openGraphImageUrl}
-                            title={project.name}
                         />
                     );
                 })}
             </div>
         </div>
     );
+
 }

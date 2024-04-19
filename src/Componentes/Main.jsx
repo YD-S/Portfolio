@@ -3,7 +3,7 @@ import PorfilePic from "../assets/Photo.png";
 import Projects from "./Projects";
 import DynamicTechBars from "./DynamicTechBars";
 import JointAboutContent from "./JointAboutContent";
-import {AdditionalSkillsData} from "./AdditionalSkillsData.js";
+import { AdditionalSkillsData } from "./AdditionalSkillsData.js";
 import AdditionalSkills from "./AdditionalSkills.jsx";
 import Intro from "./Intro.jsx";
 

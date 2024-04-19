@@ -1,22 +1,28 @@
+import { PinContainer } from "./ui/3d-pin";
 
 export default function Project({projectLink, title, description, image}) {
 
-    const handleClick = () => {
-        window.open(projectLink, "_blank");
-    };
-
     return (
-        <div className="p-5 flex-1 backdrop-blur cardBorder w-[100%] h-[100%] text-center" >
-            <img src={image} className="w-full h-auto" alt={"ProjectImg"}/>
-            <h3 className="text-2xl font-semibold mt-8">{title}</h3>
-            <p className="text-gray-400 text-sm mt-2">{description}</p>
-            <div className="flex mt-12 gap-2 align-bottom">
-                <button
-                    className="flex-1 text-sm py-3 border rounded-xl hover:border-blue-500 hover:text-blue-500"
-                    onClick={handleClick}>
-                    Checkout github
-                </button>
+        <PinContainer
+            title={title}
+            href={projectLink}
+        >
+            <div
+                className="flex flex-col p-4 tracking-tight text-slate-100/50 sm:basis-1/2 w-[20rem] h-[20rem] ">
+                <h3 className="max-w-xs !pb-2 !m-0 font-bold text-base text-slate-100">
+                    {title}
+                </h3>
+                <div className="text-base !m-0 !p-0 font-normal">
+                                <span className="text-slate-500 ">
+                                    {description}
+                                </span>
+                </div>
+                <div
+                    className="flex flex-1 w-full rounded-lg mt-4 bg-transparent">
+                    <img src={image}
+                         className="object-contain object-center w-full h-full" alt={"Github Project"}/>
+                </div>
             </div>
-        </div>
+        </PinContainer>
     );
 }
