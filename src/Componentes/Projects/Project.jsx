@@ -1,4 +1,4 @@
-import { PinContainer } from "./ui/3d-pin";
+import { PinContainer } from "../ui/3d-pin";
 
 export default function Project({projectLink, title, description, image}) {
 

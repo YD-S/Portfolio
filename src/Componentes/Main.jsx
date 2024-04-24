@@ -1,11 +1,11 @@
-import Section from "./Section.jsx";
+import Section from "./Wrappers/Section.jsx";
 import PorfilePic from "../assets/Photo.png";
-import Projects from "./Projects";
-import DynamicTechBars from "./DynamicTechBars";
-import JointAboutContent from "./JointAboutContent";
-import { AdditionalSkillsData } from "./AdditionalSkillsData.js";
-import AdditionalSkills from "./AdditionalSkills.jsx";
-import Intro from "./Intro.jsx";
+import Projects from "./Projects/Projects.jsx";
+import DynamicTechBars from "./Tecnologies/DynamicTechBars.jsx";
+import JointTimelineContent from "./Timeline/JointTimelineContent.jsx";
+import { AdditionalSkillsData } from "../Data/AdditionalSkillsData.jsx";
+import AdditionalSkills from "./Skills/AdditionalSkills.jsx";
+import Intro from "./Intro/Intro.jsx";
 
 export default function Main() {
 
@@ -30,7 +30,7 @@ export default function Main() {
                     </div>
                 </div>
             </Section>
-            {/* Projects section */}
+            {/* Projects section generating projects from GitHub Graphql API */}
             <Section id="projects">
                 <Projects />
             </Section>
@@ -57,12 +57,12 @@ export default function Main() {
             </Section>
             <Section className="py-8" id="aboutme">
                 <div className="container m-auto px-4">
-                    <h2 className="text-2xl font-semibold">About me</h2>
+                    <h2 className="text-2xl font-semibold">Timeline</h2>
                     <div
                         className="mt-12 relative before:absolute before:top-0 before:left-16 
                         before:rounded-full before:bottom-10 sm:before:bottom-2 before:w-1 before:bg-white"
                         >
-                        <JointAboutContent />
+                        <JointTimelineContent />
                     </div>
                 </div>
             </Section>

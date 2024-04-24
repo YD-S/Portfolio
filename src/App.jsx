@@ -1,8 +1,8 @@
 import "./App.css";
 import ArrowDown from "./assets/arrow-down.svg";
 import { useEffect, useState } from "react";
-import Header from "./Componentes/Header.jsx";
-import Footer from "./Componentes/Footer.jsx";
+import Header from "./Componentes/Header/Header.jsx";
+import Footer from "./Componentes/Footer/Footer.jsx";
 import Main from "./Componentes/Main.jsx";
 
 function App() {

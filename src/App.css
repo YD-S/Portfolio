@@ -13,9 +13,13 @@ body {
     @apply bg-gradient-to-r from-purple-500 to-blue-500 text-transparent;
     overflow: hidden;
     border-right: 2px solid #fff;
-    text-wrap: normal;
     display: inline-block;
     white-space: nowrap;
+}
+
+.gradiant-text-about {
+    -webkit-background-clip: text;
+    @apply bg-gradient-to-r from-purple-500 to-blue-500 text-transparent;
 }
 
 .fill-bars {

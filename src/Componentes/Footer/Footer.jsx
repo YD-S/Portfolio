@@ -1,4 +1,4 @@
-import IconGen from "./IconGen.jsx";
+import IconGen from "../ui/IconGen.jsx";
 
 export default function Footer() {
 

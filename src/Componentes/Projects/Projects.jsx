@@ -1,7 +1,5 @@
 import Project from "./Project.jsx";
 import {useEffect, useState} from "react";
-import { PinContainer } from "./ui/3d-pin";
-import testlogo from "../assets/testing.jpg";
 
 
 export default function Projects() {
