@@ -32,7 +32,7 @@ export const TimelineContentData = [
         id: 4,
         children: (
             <>
-                I Started a <strong className={"gradiant-text-about"}> Big networking Project with some colleagues</strong> in March 2022 till September 2023 till January 2023. We were Building the whole infrastructure from the ground up in Toronto Canada.
+                I Started a <strong className={"gradiant-text-about"}> Big networking Project with some colleagues</strong> in September 2023 till January 2023. We were Building the whole networking and system's infrastructure from the ground up in Toronto Canada.
             </>
         ),
         year: "2023",
