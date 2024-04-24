@@ -28,6 +28,6 @@ export const AdditionalSkillsData = [
         {
             id: 6,
             skill: "UI/UX",
-        }
+        },
     ]
 ];

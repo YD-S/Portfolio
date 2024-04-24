@@ -13,7 +13,7 @@ export default function Project({projectLink, title, description, image}) {
                     {title}
                 </h3>
                 <div className="text-base !m-0 !p-0 font-normal">
-                                <span className="text-slate-500 ">
+                                <span className="text-neutral-200">
                                     {description}
                                 </span>
                 </div>
