@@ -55,7 +55,7 @@ export default function Main() {
                     </div>
                 </div>
             </Section>
-            <Section className="py-8" id="aboutme">
+            <Section className="py-8" id="timeline">
                 <div className="container m-auto px-4">
                     <h2 className="text-2xl font-semibold">Timeline</h2>
                     <div

@@ -5,7 +5,7 @@ export const TimelineContentData = [
         id: 1,
         children: (
             <>
-                I completed my <strong className={"gradiant-text-about"}>Networking and systems degree </strong> in IES Fuengirola Nº1. Started my Professional career in 2012 as a Network Administrator.
+                I completed my <strong className={"gradiant-text-about"}>Networking and systems degree </strong> in IES Fuengirola Nº1. Started my Professional career in 2022 as a Network Administrator.
             </>
         ),
         year: "2022",

@@ -9,7 +9,7 @@ export const HeaderData = [
         link: "#technologies"
     },
     {
-        name: "About me",
-        link: "#aboutme"
+        name: "Timeline",
+        link: "#timeline"
     }
 ];

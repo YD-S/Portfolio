@@ -32,8 +32,6 @@ export default function Projects() {
             );
     }
 
-    console.log(loading);
-
     return (
         <div className="container m-auto px-4 sm:py-12">
             <h2 className="text-2xl font-semibold">Projects</h2>
