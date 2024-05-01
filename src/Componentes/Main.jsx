@@ -6,6 +6,7 @@ import JointTimelineContent from "./Timeline/JointTimelineContent.jsx";
 import { AdditionalSkillsData } from "../Data/AdditionalSkillsData.jsx";
 import AdditionalSkills from "./Skills/AdditionalSkills.jsx";
 import Intro from "./Intro/Intro.jsx";
+import ContactForm from "./Form/ContactForm.jsx";
 
 export default function Main() {
 
@@ -65,6 +66,9 @@ export default function Main() {
                         <JointTimelineContent />
                     </div>
                 </div>
+            </Section>
+            <Section>
+                <ContactForm />
             </Section>
         </main>
     )
