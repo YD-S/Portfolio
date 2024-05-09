@@ -1,5 +1,5 @@
 import Section from "./Wrappers/Section.jsx";
-import PorfilePic from "../assets/Photo.png";
+import ProfilePic from "../assets/Photo.png";
 import Projects from "./Projects/Projects.jsx";
 import DynamicTechBars from "./Tecnologies/DynamicTechBars.jsx";
 import JointTimelineContent from "./Timeline/JointTimelineContent.jsx";
@@ -26,7 +26,7 @@ export default function Main() {
                             before:bg-contain before:block before:bg-no-repeat before:w-[220px]
                             before:h-[220px] before:absolute before:bottom-0 before:-right-10"
                         >
-                            <img src={PorfilePic} className="relative z-10 w-[280px] m-auto sm:w-[650px]" alt={"ProfilePic"}/>
+                            <img src={ProfilePic} className="relative z-10 w-[280px] m-auto sm:w-[650px]" alt={"ProfilePic"}/>
                         </div>
                     </div>
                 </div>
