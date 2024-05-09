@@ -9,7 +9,6 @@ import Intro from "./Intro/Intro.jsx";
 import ContactForm from "./Form/ContactForm.jsx";
 
 export default function Main() {
-
     return (
         <main className="relative mt-28">
             {/* Intro/Banner section */}
