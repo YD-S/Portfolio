@@ -1,5 +1,5 @@
 
-import Pdf from "../../assets/TEMP-PDF-Document.pdf";
+import Pdf from "../../assets/CV.pdf";
 
 export default function Intro() {
     return (
