@@ -36,6 +36,7 @@ export default function Projects() {
         <div className="container m-auto px-4 sm:py-12">
             <h2 className="text-2xl font-semibold">Projects</h2>
             <div className="grid grid-cols-2 gap-y-12 mt-8 max-md:grid-cols-2 max-sm:grid-cols-1">
+                {loading && <><Project /><Project /><Project /><Project /><Project /><Project /></>}
                 {!loading && nodes.map((project, index) => {
                     return (
                         <Project
