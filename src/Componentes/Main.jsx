@@ -36,7 +36,7 @@ export default function Main() {
             </Section>
             {/* Technoglies section */}
             <Section className="py-10" id="technologies">
-                <div className="container m-auto px-4">
+                <div className="container m-auto px-4 max-md:pt-14">
                     <h2 className="text-2xl font-semibold">Technologies</h2>
                     <div className="mt-14">
                         <DynamicTechBars />
