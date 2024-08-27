@@ -14,20 +14,28 @@ export const AdditionalSkillsData = [
         {
             id: 3,
             skill: "Teamwork",
-        }
+        },
+        {
+            id: 4,
+            skill: "Proxmox",
+        },
     ],
     [
         {
-            id: 4,
-            skill: "Quick learning",
-        },
-        {
             id: 5,
-            skill: "Engagement",
+            skill: "Kubernetes",
         },
         {
             id: 6,
-            skill: "UI/UX",
+            skill: "Truenas",
+        },
+        {
+            id: 7,
+            skill: "Shell scripting",
+        },
+        {
+            id: 8,
+            skill: "Quick learning",
         },
     ]
 ];

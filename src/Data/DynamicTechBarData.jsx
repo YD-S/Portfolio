@@ -16,6 +16,11 @@ export const DynamicTechBarData = [
         width : "w-[90%]"
     },
     {
+        name: "Active Directory",
+        para: "Advanced",
+        width: "w-[90%]",
+    },
+    {
         name : "React",
         para  : "High",
         width : "w-[75%]"
@@ -29,5 +34,10 @@ export const DynamicTechBarData = [
         name : "UI design",
         para  : "Medium",
         width : "w-[50%]"
-    }
+    },
+    {
+        name: "Python",
+        para: "Medium",
+        width: "w-[50%]",
+    },
 ]
