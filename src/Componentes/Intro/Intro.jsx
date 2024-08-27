@@ -10,7 +10,7 @@ export default function Intro() {
             </div>
             <div>
                 <p className="mt-4 text-gray-200">
-                    I am an aspiring <strong className={"gradiant-text-about"}>FullStack developer</strong> with a passion for creating and developing web applications.
+                    I am a system administrator and an aspiring <strong className={"gradiant-text-about"}>FullStack developer</strong> with a passion for creating and developing web applications.
                     I am a quick learner and always eager to learn new technologies and frameworks.
                 </p>
                 <button
