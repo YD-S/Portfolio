@@ -5,7 +5,7 @@ export const TimelineContentData = [
         id: 1,
         children: (
             <>
-                I completed my <strong className={"gradiant-text-about"}>Networking and systems degree </strong> in IES Fuengirola Nº1. Started my Professional career in 2022 as a Network Administrator.
+                Earned a <strong className={"gradiant-text-about"}>Networking and Systems degree </strong>from IES Fuengirola Nº1 and began professional career in 2022 as a Network Administrator.
             </>
         ),
         year: "2022",
@@ -14,7 +14,7 @@ export const TimelineContentData = [
         id: 2,
         children: (
             <>
-                I was a <strong className={"gradiant-text-about"}>FrontEnd Developer at DDM2</strong> in March 2022 till March 2023. I learnt basic HTML, CSS, JS, Wordpress and Web Development in general.
+                Worked as a <strong className={"gradiant-text-about"}>Frontend Developer at DDM2</strong> (March 2022 - March 2023), gaining experience in HTML, CSS, JavaScript, WordPress, and general web development.
             </>
         ),
         year: "2022",
@@ -23,7 +23,7 @@ export const TimelineContentData = [
         id: 3,
         children: (
             <>
-                I Started the <strong className={"gradiant-text-about"}>Common Core at École 42</strong> in September 2022. I learnt C, C++, JS, Docker, ETC in 42.
+                Started the <strong className={"gradiant-text-about"}>Common Core at École 42</strong> in September 2022, gaining experience in C, C++, JavaScript, Docker, and more.
             </>
         ),
         year: "2022",
@@ -32,7 +32,7 @@ export const TimelineContentData = [
         id: 4,
         children: (
             <>
-                I Started a <strong className={"gradiant-text-about"}> Big networking Project with some colleagues</strong> in September 2023 till January 2024. We were Building the whole networking and system's infrastructure from the ground up in Toronto Canada.
+                Led a <strong className={"gradiant-text-about"}>large-scale networking project</strong> in Toronto, Canada (Sep 2023 - Jan 2024), designing and implementing the entire networking and systems infrastructure from the ground up, including servers, security, and connectivity solutions.
             </>
         ),
         year: "2023",
