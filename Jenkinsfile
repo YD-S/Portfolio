@@ -20,21 +20,13 @@ pipeline {
         }
 
         stage('Build Docker Image') {
-            steps {
-                script {
-                    docker.build(DOCKER_IMAGE, '.')
-                }
-            }
+            app = docker.build(DOCKER_IMAGE, '.')
         }
 
         stage('Push to Registry') {
-            steps {
-                script {
-                    // Use REGISTRY_URL here instead of DOCKER_REGISTRY_URL
-                    docker.withRegistry("https://${REGISTRY_URL}", 'docker-registry') {
-                        docker.image(DOCKER_IMAGE).push()
-                    }
-                }
+            docker.withRegistry("https://${REGISTRY_URL}", 'docker-registry') {
+                app.push("${env.BUILD_NUMBER}")
+                app.push('latest')
             }
         }
 
