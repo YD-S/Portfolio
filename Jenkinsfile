@@ -3,11 +3,11 @@ pipeline {
 
     environment {
         // Define registry URL separately
-        REGISTRY_URL = 'https://dck.koltserver.net'  // Replace with your actual registry URL
+        REGISTRY_URL = 'dck.koltserver.net'  // Replace with your actual registry URL
         // Get registry credentials
         DOCKER_REGISTRY = credentials('docker-registry')
         // Use REGISTRY_URL in image name
-        DOCKER_IMAGE = "yash/portfolio:latest"
+        DOCKER_IMAGE = "${REGISTRY_URL}/yash-portfolio:latest"
         PORTAINER_WEBHOOK = 'https://portainer.koltserver.net/api/stacks/webhooks/29da2db5-3bb1-4f8e-925a-9524f327ba65'
     }
 
