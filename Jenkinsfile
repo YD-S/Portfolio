@@ -20,14 +20,22 @@ pipeline {
         }
 
         stage('Build Docker Image') {
-            app = docker.build(DOCKER_IMAGE, '.')
+            steps {
+                script {
+					app = docker.build("${DOCKER_IMAGE}")
+				}
+			}
         }
 
         stage('Push to Registry') {
-            docker.withRegistry("https://${REGISTRY_URL}", 'docker-registry') {
-                app.push("${env.BUILD_NUMBER}")
-                app.push('latest')
-            }
+            steps {
+				script {
+					docker.withRegistry("https://${REGISTRY_URL}", 'docker-registry') {
+                        app.push("${env.BUILD_NUMBER}")
+                        app.push('latest')
+                    }
+				}
+			}
         }
 
         stage('Deploy') {
