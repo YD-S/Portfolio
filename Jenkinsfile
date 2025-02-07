@@ -15,7 +15,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 cleanWs()
-                git 'https://github.com/YD-S/Portfolio.git'
+                git branch: 'main', url: 'https://github.com/YD-S/Portfolio.git'
             }
         }
 
