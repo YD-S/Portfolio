@@ -12,7 +12,7 @@ pipeline {
         // Get registry credentials
         DOCKER_REGISTRY = credentials('docker-registry')
         // Use REGISTRY_URL in image name
-        DOCKER_IMAGE = "${REGISTRY_URL}/yash/portfolio:latest"
+        DOCKER_IMAGE = "yash/portfolio"
         PORTAINER_WEBHOOK = 'https://portainer.koltserver.net/api/stacks/webhooks/29da2db5-3bb1-4f8e-925a-9524f327ba65'
     }
 
@@ -41,19 +41,12 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                script {
-					app = docker.build("${DOCKER_IMAGE}")
-				}
-			}
-        }
-
         stage('Push to Registry') {
             steps {
 				script {
-					sh 'curl https://$REGISTRY_URL/v2/'
 					docker.withRegistry("https://${REGISTRY_URL}", 'docker-registry') {
+						sh "curl https://${REGISTRY_URL}/v2/_catalog"
+						def app = docker.build("${DOCKER_IMAGE}")
                         app.push("${env.BUILD_NUMBER}")
                         app.push("latest")
                     }
