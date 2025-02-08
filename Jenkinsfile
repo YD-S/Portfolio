@@ -17,6 +17,14 @@ pipeline {
     }
 
     stages {
+        stage('Install dependencies') {
+			steps {
+				script {
+					sh 'apk add --no-cache curl'
+				}
+			}
+		}
+
         stage('Checkout') {
             steps {
                 cleanWs()
