@@ -1,7 +1,9 @@
 pipeline {
       agent {
-        label 'docker'
-      }
+              docker {
+                  image 'circleci/node:latest'
+              }
+          }
     environment {
         // Define registry URL separately
         REGISTRY_URL = 'dck.koltserver.net'  // Replace with your actual registry URL
