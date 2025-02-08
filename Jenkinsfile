@@ -24,6 +24,14 @@ pipeline {
             }
         }
 
+        stage('Check access to registry') {
+			steps {
+				script {
+					sh 'curl https://${REGISTRY_URL}/v2/'
+				}
+			}
+		}
+
         stage('Build Docker Image') {
             steps {
                 script {
