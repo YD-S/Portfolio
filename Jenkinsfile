@@ -25,20 +25,21 @@ pipeline {
 			}
 		}
 
+        stage('Verify dependencies') {
+			steps {
+				script {
+					sh 'curl --version'
+					sh 'docker --version'
+				}
+			}
+		}
+
         stage('Checkout') {
             steps {
                 cleanWs()
                 git branch: 'main', url: 'https://github.com/YD-S/Portfolio.git'
             }
         }
-
-        stage('Check access to registry') {
-			steps {
-				script {
-					sh 'curl https://${REGISTRY_URL}/v2/'
-				}
-			}
-		}
 
         stage('Build Docker Image') {
             steps {
@@ -53,7 +54,7 @@ pipeline {
 				script {
 					docker.withRegistry("https://${REGISTRY_URL}", 'docker-registry') {
                         app.push("${env.BUILD_NUMBER}")
-                        app.push('latest')
+                        app.push("latest")
                     }
 				}
 			}
@@ -62,9 +63,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh """
-                        curl -X POST ${PORTAINER_WEBHOOK}
-                    """
+                    sh "curl -X POST ${PORTAINER_WEBHOOK}"
                 }
             }
         }
