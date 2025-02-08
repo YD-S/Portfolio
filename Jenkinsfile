@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-    	docker {
-			image 'docker:latest'
-			args '-v /var/run/docker.sock:/var/run/docker.sock --net=intranet'
-		}
-    }
+    agent any
 
     environment {
         // Define registry URL separately
@@ -41,11 +36,10 @@ pipeline {
             }
         }
 
-        stage('Push to Registry') {
+        stage('Build & push to Registry') {
             steps {
 				script {
 					docker.withRegistry("https://${REGISTRY_URL}", 'docker-registry') {
-						sh "curl https://${REGISTRY_URL}/v2/_catalog"
 						def app = docker.build("${DOCKER_IMAGE}")
                         app.push("${env.BUILD_NUMBER}")
                         app.push("latest")
