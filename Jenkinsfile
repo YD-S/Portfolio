@@ -45,7 +45,8 @@ pipeline {
             steps {
 				script {
 					withCredentials([usernamePassword(credentialsId: 'docker-registry', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-						sh "docker login -u $USERNAME -p $PASSWORD ${REGISTRY_URL}"
+						sh "curl https://${REGISTRY_URL}/v2/_catalog"
+						sh "docker login -u $USERNAME -p $PASSWORD https://${REGISTRY_URL}"
 						sh "docker push ${REGISTRY_URL}/${DOCKER_IMAGE}"
 					}
 				}
