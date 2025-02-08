@@ -53,12 +53,9 @@ pipeline {
             steps {
 				script {
 					sh 'curl https://$REGISTRY_URL/v2/'
-					withCredentials([DOCKER_REGISTRY]) {
-
-						docker.withRegistry("https://${REGISTRY_URL}", 'docker-registry') {
-                            app.push("${env.BUILD_NUMBER}")
-                            app.push("latest")
-                        }
+					docker.withRegistry("https://${REGISTRY_URL}", 'docker-registry') {
+                        app.push("${env.BUILD_NUMBER}")
+                        app.push("latest")
                     }
 				}
 			}
