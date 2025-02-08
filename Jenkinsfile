@@ -12,13 +12,6 @@ pipeline {
     }
 
     stages {
-        stage('Install dependencies') {
-			steps {
-				script {
-					sh 'apk add --no-cache curl'
-				}
-			}
-		}
 
         stage('Verify dependencies') {
 			steps {
