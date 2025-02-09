@@ -20,6 +20,7 @@ pipeline {
         stage('Verify dependencies') {
 			steps {
 				script {
+					sh 'apk --no-cache add curl'
 					sh 'curl --version'
 					sh 'docker --version'
 				}
