@@ -1,7 +1,7 @@
 pipeline {
       agent {
               docker {
-                  image 'circleci/node:latest'
+                  image 'docker:latest'
               }
           }
     environment {
