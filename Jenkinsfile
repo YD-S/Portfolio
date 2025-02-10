@@ -8,19 +8,19 @@ pipeline {
         // Use REGISTRY_URL in image name
         DOCKER_IMAGE = "yash/portfolio"
         VERSION = "${env.BUILD_ID}-${env.GIT_COMMIT}"
-        PORTAINER_WEBHOOK = 'https://portainer.koltserver.net/api/stacks/webhooks/29da2db5-3bb1-4f8e-925a-9524f327ba65'
+        PORTAINER_WEBHOOK = 'https://portainer.koltserver.net/api/stacks/webhooks/c157f205-6e4a-488e-a9d9-15c6b921efa9'
     }
 
     stages {
 
         stage('Verify dependencies') {
-			steps {
-				script {
-					sh 'curl --version'
-					sh 'docker --version'
-				}
+		steps {
+			script {
+				sh 'curl --version'
+				sh 'docker --version'
 			}
 		}
+	}
 
         stage('Checkout') {
             steps {
@@ -30,23 +30,20 @@ pipeline {
         }
 
         stage('Build') {
-			steps {
-				script {
-					sh "docker build -t ${DOCKER_IMAGE} ."
-					// add latest and build number tags
-					sh "docker tag ${DOCKER_IMAGE} ${REGISTRY_URL}/${DOCKER_IMAGE}:latest"
-					sh "docker tag ${DOCKER_IMAGE} ${REGISTRY_URL}/${DOCKER_IMAGE}:${VERSION}"
-				}
+		steps {
+			script {
+				sh "docker build ${DOCKER_IMAGE} ."
 			}
 		}
+	}
 
         stage('Build & push to Registry') {
             steps {
 				script {
 					withCredentials([usernamePassword(credentialsId: 'docker-registry', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-						sh "curl https://${REGISTRY_URL}/v2/_catalog"
 						sh "docker login -u $USERNAME -p $PASSWORD https://${REGISTRY_URL}"
-						sh "docker push ${REGISTRY_URL}/${DOCKER_IMAGE}"
+						sh "docker push ${REGISTRY_URL}/${DOCKER_IMAGE}:latest"
+						sh "docker push ${REGISTRY_URL}/${DOCKER_IMAGE}:${VERSION}"
 					}
 				}
 			}
