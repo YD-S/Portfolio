@@ -14,13 +14,13 @@ pipeline {
     stages {
 
         stage('Verify dependencies') {
-			steps {
-				script {
-					sh 'curl --version'
-					sh 'docker --version'
-				}
+		steps {
+			script {
+				sh 'curl --version'
+				sh 'docker --version'
 			}
 		}
+	}
 
         stage('Checkout') {
             steps {
@@ -30,23 +30,20 @@ pipeline {
         }
 
         stage('Build') {
-			steps {
-				script {
-					sh "docker build -t ${DOCKER_IMAGE} ."
-					// add latest and build number tags
-					sh "docker tag ${DOCKER_IMAGE} ${REGISTRY_URL}/${DOCKER_IMAGE}:latest"
-					sh "docker tag ${DOCKER_IMAGE} ${REGISTRY_URL}/${DOCKER_IMAGE}:${VERSION}"
-				}
+		steps {
+			script {
+				sh "docker build ${DOCKER_IMAGE} ."
 			}
 		}
+	}
 
         stage('Build & push to Registry') {
             steps {
 				script {
 					withCredentials([usernamePassword(credentialsId: 'docker-registry', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-						sh "curl https://${REGISTRY_URL}/v2/_catalog"
 						sh "docker login -u $USERNAME -p $PASSWORD https://${REGISTRY_URL}"
-						sh "docker push ${REGISTRY_URL}/${DOCKER_IMAGE}"
+						sh "docker push ${REGISTRY_URL}/${DOCKER_IMAGE}:latest"
+						sh "docker push ${REGISTRY_URL}/${DOCKER_IMAGE}:${VERSION}"
 					}
 				}
 			}
