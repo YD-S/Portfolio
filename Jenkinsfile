@@ -1,10 +1,5 @@
 pipeline {
-      agent {
-              docker {
-                  image 'docker:latest'
-                  args '-u=root'
-              }
-          }
+      agent any
     environment {
         // Define registry URL separately
         REGISTRY_URL = 'dck.koltserver.net'  // Replace with your actual registry URL
@@ -21,7 +16,6 @@ pipeline {
         stage('Verify dependencies') {
 			steps {
 				script {
-					sh 'apk --no-cache add curl'
 					sh 'curl --version'
 					sh 'docker --version'
 				}
