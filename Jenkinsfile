@@ -8,7 +8,7 @@ pipeline {
         // Use REGISTRY_URL in image name
         DOCKER_IMAGE = "yash/portfolio"
         VERSION = "${env.BUILD_ID}-${env.GIT_COMMIT}"
-        PORTAINER_WEBHOOK = 'https://portainer.koltserver.net/api/stacks/webhooks/29da2db5-3bb1-4f8e-925a-9524f327ba65'
+        PORTAINER_WEBHOOK = 'https://portainer.koltserver.net/api/stacks/webhooks/c157f205-6e4a-488e-a9d9-15c6b921efa9'
     }
 
     stages {
