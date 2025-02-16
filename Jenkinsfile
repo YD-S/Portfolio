@@ -44,7 +44,7 @@ pipeline {
         stage('Build & push to Registry') {
             steps {
 				script {
-					docker.withRegistry('https://${REGISTRY_URL}', 'dockerhub') {
+					docker.withRegistry("https://${REGISTRY_URL}", 'dockerhub') {
 						def app = docker.build("${DOCKER_IMAGE}:${VERSION}")
 						// add latest and build number tags
 						app.push("latest")
