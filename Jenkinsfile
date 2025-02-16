@@ -45,8 +45,8 @@ pipeline {
 				script {
 					withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
 						sh "docker login -u $USERNAME -p $PASSWORD https://${REGISTRY_URL}"
-						sh "docker push ${REGISTRY_URL}/${DOCKER_IMAGE}:latest"
-						sh "docker push ${REGISTRY_URL}/${DOCKER_IMAGE}:${VERSION}"
+						sh "docker push ${DOCKER_IMAGE}:latest"
+						sh "docker push ${DOCKER_IMAGE}:${VERSION}"
 					}
 				}
 			}
