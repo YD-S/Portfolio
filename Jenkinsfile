@@ -29,25 +29,32 @@ pipeline {
             }
         }
 
-        stage('Build') {
-		steps {
-			script {
-					sh "docker build -t ${DOCKER_IMAGE} ."
+        //stage('Build') {
+		//steps {
+		//	script {
+		//			def app = docker.build("${DOCKER_IMAGE}:${VERSION}")
+					//sh "docker build -t ${DOCKER_IMAGE} ."
 					// add latest and build number tags
-					sh "docker tag ${DOCKER_IMAGE} ${DOCKER_IMAGE}:latest"
-					sh "docker tag ${DOCKER_IMAGE} ${DOCKER_IMAGE}:${VERSION}"
-			}
-		}
-	}
+					//sh "docker tag ${DOCKER_IMAGE} ${DOCKER_IMAGE}:latest"
+					//sh "docker tag ${DOCKER_IMAGE} ${DOCKER_IMAGE}:${VERSION}"
+		//	}
+		//}
+	//}
 
         stage('Build & push to Registry') {
             steps {
 				script {
-					withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-						sh "docker login -u $USERNAME -p $PASSWORD https://${REGISTRY_URL}"
-						sh "docker push ${DOCKER_IMAGE}:latest"
-						sh "docker push ${DOCKER_IMAGE}:${VERSION}"
+					docker.withRegistry('https://${REGISTRY_URL}', 'dockerhub') {
+						def app = docker.build("${DOCKER_IMAGE}:${VERSION}")
+						// add latest and build number tags
+						app.push("latest")
+						app.push("${VERSION}")
 					}
+					//withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+					//	sh "docker login -u $USERNAME -p $PASSWORD https://${REGISTRY_URL}"
+					//	sh "docker push ${DOCKER_IMAGE}:latest"
+					//	sh "docker push ${DOCKER_IMAGE}:${VERSION}"
+					//}
 				}
 			}
         }
