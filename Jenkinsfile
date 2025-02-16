@@ -34,8 +34,8 @@ pipeline {
 			script {
 					sh "docker build -t ${DOCKER_IMAGE} ."
 					// add latest and build number tags
-					sh "docker tag ${DOCKER_IMAGE} ${REGISTRY_URL}/${DOCKER_IMAGE}:latest"
-					sh "docker tag ${DOCKER_IMAGE} ${REGISTRY_URL}/${DOCKER_IMAGE}:${VERSION}"
+					sh "docker tag ${DOCKER_IMAGE} ${DOCKER_IMAGE}:latest"
+					sh "docker tag ${DOCKER_IMAGE} ${DOCKER_IMAGE}:${VERSION}"
 			}
 		}
 	}
