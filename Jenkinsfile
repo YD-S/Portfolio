@@ -17,25 +17,29 @@ pipeline {
 				}
 			}
 		}
-	
+
 		stage('Checkout') {
 			steps {
 				cleanWs()
 				git branch: 'main', url: 'https://github.com/YD-S/Portfolio.git'
 			}
 		}
-	
+
 		stage('Build') {
 			steps {
-				def app = docker.build("${DOCKER_IMAGE}:latest")
+				script {
+					def app = docker.build("${DOCKER_IMAGE}:latest")
+				}
 			}
 		}
 
 		stage('Push to Registry') {
 			steps {
-				docker.withRegistry("${REGISTRY_URL}", 'dockerhub') {
-					app.push("latest")
-					app.push("${VERSION}")
+				script {
+					docker.withRegistry("${REGISTRY_URL}", 'dockerhub') {
+						app.push("latest")
+						app.push("${VERSION}")
+					}
 				}
 			}
 		}
