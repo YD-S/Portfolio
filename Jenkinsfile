@@ -1,6 +1,5 @@
 pipeline {
 	agent any
-	def app
 	environment {
 		REGISTRY_URL = 'docker.io'
 		DOCKER_IMAGE = "yashds03/portfolio"
@@ -11,36 +10,32 @@ pipeline {
 	stages {
 
 		stage('Verify dependencies') {
-		steps {
-			script {
-				sh 'curl --version'
-				sh 'docker --version'
+			steps {
+				script {
+					sh 'curl --version'
+					sh 'docker --version'
+				}
 			}
 		}
-	}
-
+	
 		stage('Checkout') {
 			steps {
 				cleanWs()
 				git branch: 'main', url: 'https://github.com/YD-S/Portfolio.git'
 			}
 		}
-
+	
 		stage('Build') {
-		steps {
-			script {
+			steps {
 				app = docker.build("${DOCKER_IMAGE}:latest")
 			}
 		}
-	}
 
 		stage('Push to Registry') {
 			steps {
-				script {
-					docker.withRegistry("${REGISTRY_URL}", 'dockerhub') {
-						app.push("latest")
-						app.push("${VERSION}")
-					}
+				docker.withRegistry("${REGISTRY_URL}", 'dockerhub') {
+					app.push("latest")
+					app.push("${VERSION}")
 				}
 			}
 		}
