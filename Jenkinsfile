@@ -27,7 +27,7 @@ pipeline {
 	
 		stage('Build') {
 			steps {
-				app = docker.build("${DOCKER_IMAGE}:latest")
+				def app = docker.build("${DOCKER_IMAGE}:latest")
 			}
 		}
 
