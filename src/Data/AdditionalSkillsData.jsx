@@ -13,7 +13,7 @@ export const AdditionalSkillsData = [
         },
         {
             id: 3,
-            skill: "Teamwork",
+            skill: "Networking",
         },
         {
             id: 4,
@@ -39,7 +39,7 @@ export const AdditionalSkillsData = [
         },
         {
             id: 9,
-            skill: "Quick learning",
+            skill: "UI/UX",
         },
         {
             id: 10,
