@@ -37,4 +37,13 @@ export const TimelineContentData = [
         ),
         year: "2023",
     },
+    {
+        id: 5,
+        children: (
+            <>
+                Made a <strong className={"gradiant-text-about"}>Travel itinerary planner </strong> using Spring Boot, React, and PostgreSQL, showcasing skills in full-stack development and database management.
+            </>
+        ),
+        year: "2024",
+    },
     ]
