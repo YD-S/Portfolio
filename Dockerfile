@@ -19,6 +19,6 @@ RUN npm run build
 
 RUN cp -r dist/* /usr/share/nginx/html/
 
-EXPOSE 443
+EXPOSE 8080
 
 ENTRYPOINT ["/bin/bash", "entrypoint.sh"]
