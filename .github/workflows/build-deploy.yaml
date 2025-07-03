@@ -34,6 +34,8 @@ jobs:
           
           sed -i "s|image:.*|image: $IMAGE_NAME:$IMAGE_TAG|" yash-portfolio/yash-portfolio-deployment.yaml
           
+          sed -i "s|revisionHistoryLimit:.*|revisionHistoryLimit: 0|" yash-portfolio/yash-portfolio-deployment.yaml
+          
           git config user.name "Actions"
           git config user.email "actions@github.com"
           git add .
