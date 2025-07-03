@@ -145,7 +145,7 @@ jobs:
               -H "Authorization: token ${{ secrets.GIST_TOKEN }}" \
               -H "Content-Type: application/json" \
               -d "{\"files\":{\"$1\":{\"content\":\"{\\\"schemaVersion\\\":1,\\\"label\\\":\\\"$2\\\",\\\"message\\\":\\\"$3\\\",\\\"color\\\":\\\"$4\\\"}\"}}}" \
-              "https://api.github.com/gists/${{ secrets.GIST_ID }}" > /dev/null 2>&1 &
+              "https://api.github.com/gists/${{ secrets.GIST_ID }}"
           }
           
           update_badge "deployment-status.json" "Deploy" "$DEPLOY_MSG" "$DEPLOY_COLOR"
