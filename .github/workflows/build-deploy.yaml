@@ -73,7 +73,6 @@ jobs:
         if: always()
         run: |
           BUILD_STATUS="${{ steps.build_push_image.outcome }}"
-          
           GITOPS_STATUS="${{ steps.update_gitops_manifest.outcome }}" 
           
           DEPLOY_MSG=""
@@ -99,21 +98,15 @@ jobs:
           fi
           
           update_gist_badge() {
-            local FILENAME=$1
-            local LABEL=$2
-            local MESSAGE=$3
-            local COLOR=$4
+            local FILENAME="$1"
+            local LABEL="$2"
+            local MESSAGE="$3"
+            local COLOR="$4"
           
             curl -X POST \
               -H "Authorization: token ${{ secrets.GIST_TOKEN }}" \
               -H "Content-Type: application/json" \
-              -d '{
-                "files": {
-                  "'$FILENAME'": {
-                    "content": "{\"schemaVersion\": 1, \"label\": \"'$LABEL'\", \"message\": \"'$MESSAGE'\", \"color\": \"'$COLOR'\"}"
-                  }
-                }
-              }' \
+              -d "{ \"files\": { \"$FILENAME\": { \"content\": \"{\\\"schemaVersion\\\": 1, \\\"label\\\": \\\"$LABEL\\\", \\\"message\\\": \\\"$MESSAGE\\\", \\\"color\\\": \\\"$COLOR\\\"}\" } } }" \
               https://api.github.com/gists/${{ secrets.GIST_ID }}
           }
           
