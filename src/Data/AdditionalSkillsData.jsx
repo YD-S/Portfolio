@@ -1,6 +1,3 @@
-
-// get 2 arrays from the data file
-
 export const AdditionalSkillsData = [
     [
         {
