@@ -1,0 +1,35 @@
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up environment variables
+        run: |
+          echo "IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/portfolio" >> $GITHUB_ENV
+          echo "IMAGE_TAG=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      - name: Docker Login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push
+        run: |
+          docker build -t $IMAGE_NAME:$IMAGE_TAG .
+          docker push $IMAGE_NAME:$IMAGE_TAG
+
+      - name: Clone GitOps repo
+        run: |
+          git clone https://x-access-token:${{ secrets.GITOPS_PAT }}@github.com/Kolterdyx/gitops.git
+          cd gitops
+          
+          sed -i "s|image:.*|image: $IMAGE_NAME:$IMAGE_TAG|" yash-portfolio/yash-portfolio-deployment.yaml
+          
+          git config user.name "Actions"
+          git config user.email "actions@github.com"
+          git add .
+          git commit -m "Update image to $IMAGE_TAG"
+          git push
