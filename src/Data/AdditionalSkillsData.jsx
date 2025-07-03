@@ -1,6 +1,3 @@
-
-// get 2 arrays from the data file
-
 export const AdditionalSkillsData = [
     [
         {
@@ -39,7 +36,7 @@ export const AdditionalSkillsData = [
         },
         {
             id: 9,
-            skill: "UI/UX",
+            skill: "DevOps",
         },
         {
             id: 10,
