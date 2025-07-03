@@ -1,20 +1,34 @@
+name: CI/CD Pipeline
+
 on:
   push:
-    branches: [ main, master ]
+    branches:
+      - main
+      - master
   pull_request:
-    branches: [ main, master ]
+    branches:
+      - main
+      - master
 
 jobs:
-  build-deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+      pull-requests: write
+      id-token: write
+
     steps:
-      - name: Checkout
+      - name: Checkout Application Repository
         uses: actions/checkout@v4
 
-      - name: Set up environment variables
+      - name: Set up Environment Variables
+        id: set_env_vars
         run: |
           echo "IMAGE_NAME=${{ secrets.DOCKERHUB_USERNAME }}/portfolio" >> $GITHUB_ENV
           echo "IMAGE_TAG=${GITHUB_SHA::7}" >> $GITHUB_ENV
+          echo "build_status=success" >> "$GITHUB_OUTPUT"
 
       - name: Docker Login
         uses: docker/login-action@v3
@@ -22,22 +36,87 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and push
+      - name: Build and Push Docker Image
+        id: build_push_image
         run: |
           docker build -t $IMAGE_NAME:$IMAGE_TAG .
           docker push $IMAGE_NAME:$IMAGE_TAG
+        env:
+          ACTIONS_RUNNER_DEBUG: true
 
-      - name: Clone GitOps repo
+      - name: Checkout GitOps Repository
+        id: checkout_gitops_repo
+        if: success() && steps.build_push_image.outcome == 'success'
+        uses: actions/checkout@v4
+        with:
+          repository: Kolterdyx/gitops
+          token: ${{ secrets.GITOPS_PAT }}
+          path: gitops_repo
+
+      - name: Update GitOps Manifest and Push
+        id: update_gitops_manifest
+        if: success() && steps.checkout_gitops_repo.outcome == 'success'
+        working-directory: gitops_repo
         run: |
-          git clone https://x-access-token:${{ secrets.GITOPS_PAT }}@github.com/Kolterdyx/gitops.git
-          cd gitops
+          git config user.name "GitHub Actions"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           
-          sed -i "s|image:.*|image: $IMAGE_NAME:$IMAGE_TAG|" yash-portfolio/yash-portfolio-deployment.yaml
+          sed -i "s|image:.*|image: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}|" yash-portfolio/yash-portfolio-deployment.yaml
           
           sed -i "s|revisionHistoryLimit:.*|revisionHistoryLimit: 0|" yash-portfolio/yash-portfolio-deployment.yaml
           
-          git config user.name "Actions"
-          git config user.email "actions@github.com"
           git add .
-          git commit -m "Update image to $IMAGE_TAG"
+          git commit -m "chore(deps): Update portfolio image to ${{ env.IMAGE_TAG }}"
           git push
+
+      - name: Update Status Badges
+        if: always()
+        run: |
+          BUILD_STATUS="${{ steps.build_push_image.outcome }}"
+          
+          GITOPS_STATUS="${{ steps.update_gitops_manifest.outcome }}" 
+          
+          DEPLOY_MSG=""
+          DEPLOY_COLOR=""
+          STATUS_MSG=""
+          STATUS_COLOR=""
+          
+          if [ "$BUILD_STATUS" == "success" ] && [ "$GITOPS_STATUS" == "success" ]; then
+            DEPLOY_MSG="🚀 Deployed Successfully"
+            DEPLOY_COLOR="brightgreen"
+            STATUS_MSG="✨ Production Ready"
+            STATUS_COLOR="success"
+          elif [ "$BUILD_STATUS" == "success" ]; then
+            DEPLOY_MSG="⏳ Build Complete, Deploy Failed"
+            DEPLOY_COLOR="yellow"
+            STATUS_MSG="⚠️ Deployment Issues"
+            STATUS_COLOR="orange"
+          else
+            DEPLOY_MSG="❌ Build Failed"
+            DEPLOY_COLOR="red"
+            STATUS_MSG="🚨 Needs Attention"
+            STATUS_COLOR="critical"
+          fi
+          
+          update_gist_badge() {
+            local FILENAME=$1
+            local LABEL=$2
+            local MESSAGE=$3
+            local COLOR=$4
+          
+            curl -X POST \
+              -H "Authorization: token ${{ secrets.GIST_TOKEN }}" \
+              -H "Content-Type: application/json" \
+              -d '{
+                "files": {
+                  "'$FILENAME'": {
+                    "content": "{\"schemaVersion\": 1, \"label\": \"'$LABEL'\", \"message\": \"'$MESSAGE'\", \"color\": \"'$COLOR'\"}"
+                  }
+                }
+              }' \
+              https://api.github.com/gists/${{ secrets.GIST_ID }}
+          }
+          
+          update_gist_badge "deployment-status.json" "Deployment" "$DEPLOY_MSG" "$DEPLOY_COLOR"
+          update_gist_badge "version-badge.json" "Version" "v${{ env.IMAGE_TAG }}" "blue"
+          update_gist_badge "custom-status.json" "Portfolio Status" "$STATUS_MSG" "$STATUS_COLOR"
