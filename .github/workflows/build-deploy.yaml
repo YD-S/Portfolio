@@ -34,6 +34,7 @@ jobs:
       contents: read
       packages: write
 
+
     outputs:
       image-tag: ${{ steps.vars.outputs.image-tag }}
       build-success: ${{ steps.build.outcome == 'success' }}
