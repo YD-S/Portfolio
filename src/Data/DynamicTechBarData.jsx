@@ -31,13 +31,13 @@ export const DynamicTechBarData = [
         width : "w-[65%]"
     },
     {
-        name : "UI design",
-        para  : "Medium",
+        name : "Java",
+        para  : "intermediate",
         width : "w-[50%]"
     },
     {
         name: "Python",
-        para: "Medium",
+        para: "intermediate",
         width: "w-[50%]",
     },
 ]

@@ -11,22 +11,11 @@ export default function Projects() {
         getAllNodes();
     }, []);
 
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer MWLSOxuqCmelnh1mKn54Aj65yYNY7K"
-        },
-        body: JSON.stringify( {
-            "api": "$res:u/ysingh/github_graphql"
-        }),
-    };
-
     const getAllNodes = () => {
-        fetch("https://windmill.koltserver.net/api/w/app-pipelines/jobs/run_wait_result/p/u/ysingh/get_github_projects", requestOptions)
+        fetch(`https://${window.location.host}/api/github`, { method: 'GET' })
             .then(r => r.json())
             .then(data => {
-                    setNodes(data.user.pinnedItems.nodes);
+                    setNodes(data.data.user.pinnedItems.nodes);
                     setLoading(false);
                 }
             );

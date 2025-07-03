@@ -1,0 +1,157 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, master]
+    paths-ignore:
+      - 'README.md'
+      - 'docs/**'
+      - '*.md'
+      - '.github/**'
+      - '.gitignore'
+      - 'LICENSE'
+      - '.dockerignore'
+
+  workflow_dispatch:
+    inputs:
+      force_deploy:
+        description: 'Force deployment'
+        type: boolean
+        default: false
+
+env:
+  REGISTRY: docker.io
+  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/portfolio
+
+jobs:
+  build-and-push:
+    if: |
+      (github.event_name == 'pull_request' && github.event.pull_request.merged == true) ||
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.force_deploy == 'true')
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: read
+      packages: write
+
+    outputs:
+      image-tag: ${{ steps.vars.outputs.image-tag }}
+      build-success: ${{ steps.build.outcome == 'success' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set variables
+        id: vars
+        run: |
+          echo "image-tag=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        id: build
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.IMAGE_NAME }}:${{ steps.vars.outputs.image-tag }}
+            ${{ env.IMAGE_NAME }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          platforms: linux/amd64
+          build-args: |
+            BUILDKIT_INLINE_CACHE=1
+
+  update-gitops:
+    needs: build-and-push
+    if: needs.build-and-push.outputs.build-success == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+
+    outputs:
+      gitops-success: ${{ steps.gitops.outcome == 'success' }}
+
+    steps:
+      - name: Update GitOps Repository
+        id: gitops
+        run: |
+          IMAGE_TAG="${{ needs.build-and-push.outputs.image-tag }}"
+          
+          git clone --depth=1 --filter=blob:none --sparse https://github-actions:${{ secrets.GITOPS_PAT }}@github.com/Kolterdyx/gitops.git gitops
+          cd gitops
+          git sparse-checkout set yash-portfolio/
+          
+          sed -i "s|image:.*|image: ${{ env.IMAGE_NAME }}:${IMAGE_TAG}|" yash-portfolio/yash-portfolio-deployment.yaml
+          sed -i "s|revisionHistoryLimit:.*|revisionHistoryLimit: 0|" yash-portfolio/yash-portfolio-deployment.yaml
+          
+          if ! git diff --quiet; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add yash-portfolio/yash-portfolio-deployment.yaml
+            git commit -m "chore: update portfolio to ${IMAGE_TAG}"
+            git push
+            echo "GitOps updated successfully"
+          else
+            echo "No changes to commit"
+          fi
+
+  update-status-badges:
+    needs: [build-and-push, update-gitops]
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    permissions:
+      contents: read
+
+    steps:
+      - name: Update Status Badges
+        run: |
+          BUILD_STATUS="${{ needs.build-and-push.result }}"
+          GITOPS_STATUS="${{ needs.update-gitops.result }}"
+          IMAGE_TAG="${{ needs.build-and-push.outputs.image-tag }}"
+          
+          if [ "$BUILD_STATUS" == "success" ] && [ "$GITOPS_STATUS" == "success" ]; then
+            DEPLOY_MSG="🚀 Deployed"
+            DEPLOY_COLOR="brightgreen"
+            STATUS_MSG="✨ Ready"
+            STATUS_COLOR="success"
+          elif [ "$BUILD_STATUS" == "success" ]; then
+            DEPLOY_MSG="⏳ Build OK"
+            DEPLOY_COLOR="yellow"
+            STATUS_MSG="⚠️ Deploy Issue"
+            STATUS_COLOR="orange"
+          else
+            DEPLOY_MSG="❌ Failed"
+            DEPLOY_COLOR="red"
+            STATUS_MSG="🚨 Attention"
+            STATUS_COLOR="critical"
+          fi
+          
+          update_badge() {
+            curl -sf -X PATCH \
+              -H "Authorization: token ${{ secrets.GIST_TOKEN }}" \
+              -H "Content-Type: application/json" \
+              -d "{\"files\":{\"$1\":{\"content\":\"{\\\"schemaVersion\\\":1,\\\"label\\\":\\\"$2\\\",\\\"message\\\":\\\"$3\\\",\\\"color\\\":\\\"$4\\\"}\"}}}" \
+              "https://api.github.com/gists/${{ secrets.GIST_ID }}" > /dev/null 2>&1 &
+          }
+          
+          update_badge "deployment-status.json" "Deploy" "$DEPLOY_MSG" "$DEPLOY_COLOR"
+          update_badge "version-badge.json" "Version" "v ${IMAGE_TAG}" "blue"
+          update_badge "status.json" "Status" "$STATUS_MSG" "$STATUS_COLOR"
+          
+          wait
+          
+          echo "Status badges updated"
