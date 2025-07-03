@@ -149,7 +149,7 @@ jobs:
           }
           
           update_badge "deployment-status.json" "Deploy" "$DEPLOY_MSG" "$DEPLOY_COLOR"
-          update_badge "version-badge.json" "Version" "v${IMAGE_TAG}" "blue"
+          update_badge "version-badge.json" "Version" "v ${IMAGE_TAG}" "blue"
           update_badge "status.json" "Status" "$STATUS_MSG" "$STATUS_COLOR"
           
           wait
