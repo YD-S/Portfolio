@@ -155,3 +155,4 @@ jobs:
           wait
           
           echo "Status badges updated"
+          echo "Version: v ${IMAGE_TAG}"
