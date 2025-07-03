@@ -36,7 +36,7 @@ export const AdditionalSkillsData = [
         },
         {
             id: 9,
-            skill: "Devops",
+            skill: "DevOps",
         },
         {
             id: 10,
