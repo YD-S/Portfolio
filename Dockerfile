@@ -15,6 +15,6 @@ COPY ./backend /app/backend
 COPY entrypoint.sh /app/entrypoint.sh
 COPY ./nginx.conf /etc/nginx/http.d/default.conf
 RUN pip install -r backend/requirements.txt --break-system-packages
-COPY --from=builder /app/dist/* /usr/share/nginx/html/
+COPY --from=builder /app/dist/ /app/dist
 EXPOSE 8080
 ENTRYPOINT ["/bin/sh", "/app/entrypoint.sh"]
