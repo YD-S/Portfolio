@@ -2,8 +2,7 @@ name: Handle PRs merged into master
 
 on:
   pull_request:
-    branches:
-      - master
+    branches: [main, master]
     types:
       - closed
 
@@ -62,7 +61,7 @@ jobs:
             All development should target this branch.
           branch: ${{ env.NEXT_BRANCH }}
           draft: true
-          base: master
+          base: main
 
       - name: Delete old next-x.x.x branch
         if: startsWith(env.SOURCE_BRANCH, 'next-')
@@ -85,7 +84,7 @@ jobs:
           VERSION_NEXT=$(jq -r .version package.json)
           
           # Merge master into next
-          git merge origin/master --no-edit || true
+          git merge origin/main --no-edit || true
           
           # Restore the original version in package.json
           jq --arg ver "$VERSION_NEXT" '.version = $ver' package.json > package.tmp.json
