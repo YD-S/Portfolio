@@ -1,24 +1,20 @@
 
-FROM nginx:latest
-
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get install -y npm openssl python3-pip python3
-RUN mkdir -p /etc/nginx/ssl
-
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
-
-COPY . /app
-
+FROM node:22-alpine AS builder
 WORKDIR /app
-
-RUN pip install -r backend/requirements.txt --break-system-packages
-
+COPY . /app
 RUN npm install
-
 RUN npm run build
 
-RUN cp -r dist/* /usr/share/nginx/html/
 
+FROM python:3.13-alpine
+
+RUN apk update && apk upgrade
+RUN apk add --no-cache nginx
+WORKDIR /app
+COPY ./backend /app/backend
+COPY entrypoint.sh /app/entrypoint.sh
+COPY ./nginx.conf /etc/nginx/html.d/default.conf
+RUN pip install -r backend/requirements.txt --break-system-packages
+COPY --from=builder /app/dist/* /usr/share/nginx/html/
 EXPOSE 8080
-
-ENTRYPOINT ["/bin/bash", "entrypoint.sh"]
+ENTRYPOINT ["/bin/bash", "/app/entrypoint.sh"]
