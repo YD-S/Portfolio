@@ -13,7 +13,7 @@ RUN apk add --no-cache nginx
 WORKDIR /app
 COPY ./backend /app/backend
 COPY entrypoint.sh /app/entrypoint.sh
-COPY ./nginx.conf /etc/nginx/html.d/default.conf
+COPY ./nginx.conf /etc/nginx/http.d/default.conf
 RUN pip install -r backend/requirements.txt --break-system-packages
 COPY --from=builder /app/dist/* /usr/share/nginx/html/
 EXPOSE 8080
