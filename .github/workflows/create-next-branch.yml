@@ -47,7 +47,12 @@ jobs:
         if: startsWith(env.SOURCE_BRANCH, 'next-')
         run: |
           jq --arg v "$NEW_VERSION" '.version = $v' package.json > tmp.json && mv tmp.json package.json
-          echo "Version updated to $NEW_VERSION"
+          
+          if [ -f package-lock.json ]; then
+            jq --arg v "$NEW_VERSION" '.version = $v' package-lock.json > tmp-lock.json && mv tmp-lock.json package-lock.json
+          fi
+          
+          echo "Version updated to $NEW_VERSION in both package.json and package-lock.json"
 
       - name: Open draft PR from new next to master
         if: startsWith(env.SOURCE_BRANCH, 'next-')
@@ -86,10 +91,16 @@ jobs:
           # Merge master into next
           git merge origin/main --no-edit || true
           
-          # Restore the original version in package.json
+          # Restore the original version in both files
           jq --arg ver "$VERSION_NEXT" '.version = $ver' package.json > package.tmp.json
           mv package.tmp.json package.json
-          git add package.json
+          
+          if [ -f package-lock.json ]; then
+            jq --arg ver "$VERSION_NEXT" '.version = $ver' package-lock.json > package-lock.tmp.json
+            mv package-lock.tmp.json package-lock.json
+          fi
+          
+          git add package.json package-lock.json
           
           if ! git diff --cached --quiet; then
             git commit -m "fix: preserve package.json version after hotfix merge"
