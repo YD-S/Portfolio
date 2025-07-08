@@ -1,0 +1,99 @@
+name: Handle PRs merged into master
+
+on:
+  pull_request:
+    branches:
+      - master
+    types:
+      - closed
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  handle-merge:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract source and base branches
+        id: branchinfo
+        run: |
+          echo "SOURCE_BRANCH=${{ github.event.pull_request.head.ref }}" >> $GITHUB_ENV
+          echo "BASE_BRANCH=${{ github.event.pull_request.base.ref }}" >> $GITHUB_ENV
+
+      - name: Read and increment version
+        if: startsWith(env.SOURCE_BRANCH, 'next-')
+        id: version
+        run: |
+          CURRENT_VERSION=$(jq -r '.version' package.json)
+          echo "Current version: $CURRENT_VERSION"
+
+          IFS='.' read -r major minor patch <<< "$CURRENT_VERSION"
+          minor=$((minor + 1))
+          NEW_VERSION="${major}.${minor}.0"
+          NEXT_BRANCH="next-${NEW_VERSION}"
+
+          echo "New version: $NEW_VERSION"
+          echo "CURRENT_VERSION=$CURRENT_VERSION" >> $GITHUB_ENV
+          echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+          echo "NEXT_BRANCH=$NEXT_BRANCH" >> $GITHUB_ENV
+
+      - name: Write version in package.json
+        if: startsWith(env.SOURCE_BRANCH, 'next-')
+        run: |
+          jq --arg v "$NEW_VERSION" '.version = $v' package.json > tmp.json && mv tmp.json package.json
+          echo "Version updated to $NEW_VERSION"
+
+      - name: Open draft PR from new next to master
+        if: startsWith(env.SOURCE_BRANCH, 'next-')
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "chore: start ${{ env.NEXT_BRANCH }} with version ${{ env.NEW_VERSION }}"
+          title: "Prepare release ${{ env.NEW_VERSION }}"
+          body: |
+            This PR tracks the upcoming release version **${{ env.NEW_VERSION }}**.
+
+            All development should target this branch.
+          branch: ${{ env.NEXT_BRANCH }}
+          draft: true
+          base: master
+
+      - name: Delete old next-x.x.x branch
+        if: startsWith(env.SOURCE_BRANCH, 'next-')
+        run: |
+          branch_name="${{ env.SOURCE_BRANCH }}"
+          echo "Deleting old next branch: $branch_name"
+          git push origin --delete "$branch_name" || echo "Branch $branch_name does not exist or could not be deleted."
+
+      - name: Merge master into next (if from hotfix/*)
+        if: startsWith(env.SOURCE_BRANCH, 'hotfix/')
+        run: |
+          CURRENT_VERSION=$(jq -r .version package.json)
+          NEXT_BRANCH="next-${CURRENT_VERSION}"
+          echo "Merging master into $NEXT_BRANCH"
+          
+          git fetch origin "$NEXT_BRANCH"
+          git checkout "$NEXT_BRANCH"
+          
+          # Save version from next branch's package.json
+          VERSION_NEXT=$(jq -r .version package.json)
+          
+          # Merge master into next
+          git merge origin/master --no-edit || true
+          
+          # Restore the original version in package.json
+          jq --arg ver "$VERSION_NEXT" '.version = $ver' package.json > package.tmp.json
+          mv package.tmp.json package.json
+          git add package.json
+          
+          if ! git diff --cached --quiet; then
+            git commit -m "fix: preserve package.json version after hotfix merge"
+          fi
+          
+          git push origin "$NEXT_BRANCH"
