@@ -8,6 +8,7 @@
   </p>
 </div>
 
+
 ---
 
 Welcome to my personal portfolio project — a modern, containerized application that showcases my skills, projects, and experience. This project is built with performance, accessibility, and clean architecture in mind, using a professional-grade CI/CD pipeline for automated Docker builds and GitOps deployments.
