@@ -23,27 +23,35 @@ export const TimelineContentData = [
         id: 3,
         children: (
             <>
-                Started the <strong className={"gradiant-text-about"}>Common Core at École 42</strong> in September 2022, gaining experience in C, C++, JavaScript, Docker, and more.
-            </>
+                Led a <strong className={"gradiant-text-about"}>large-scale networking project</strong> in Toronto, Canada (Sep 2023 – Jan 2024), delivering end-to-end infrastructure from the ground up.            </>
         ),
-        year: "2022",
+        year: "2023",
     },
     {
         id: 4,
         children: (
             <>
-                Led a <strong className={"gradiant-text-about"}>large-scale networking project</strong> in Toronto, Canada (Sep 2023 - Jan 2024), designing and implementing the entire networking and systems infrastructure from the ground up, including servers, security, and connectivity solutions.
+                Built a <strong className={"gradiant-text-about"}>Travel Itinerary Planner</strong>, delivering a full-stack application with backend, frontend, and database integration.
             </>
         ),
-        year: "2023",
+        year: "2024",
     },
     {
         id: 5,
         children: (
             <>
-                Made a <strong className={"gradiant-text-about"}>Travel itinerary planner </strong> using Spring Boot, React, and PostgreSQL, showcasing skills in full-stack development and database management.
+                Completed the <strong className={"gradiant-text-about"}>42 Common Core</strong>, consolidating my full-stack skills and team-based development experience.
             </>
         ),
-        year: "2024",
+        year: "2025",
+    },
+    {
+        id: 6,
+        children: (
+            <>
+                Joined <strong className={"gradiant-text-about"}>Venty</strong> as a Frontend Developer and later transitioned into a Full-Stack role, working with React and Go on scalable, production-grade systems.
+            </>
+        ),
+        year: "2025",
     },
     ]
