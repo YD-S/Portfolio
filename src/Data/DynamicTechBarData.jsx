@@ -3,12 +3,12 @@ export const DynamicTechBarData = [
     {
         name : "HTML5",
         para  : "Advanced",
-        width : "w-full"
+        width : "w-[95%]"
     },
     {
         name : "CSS, Tailwind & Bootstrap",
         para  : "Advanced",
-        width : "w-full"
+        width : "w-[90%]"
     },
     {
         name : "JavaScript, TypeScript",
@@ -16,9 +16,9 @@ export const DynamicTechBarData = [
         width : "w-[90%]"
     },
     {
-        name: "Active Directory",
-        para: "Advanced",
-        width: "w-[90%]",
+        name: "Golang",
+        para: "High",
+        width: "w-[75%]",
     },
     {
         name : "React",
@@ -33,7 +33,7 @@ export const DynamicTechBarData = [
     {
         name : "Java",
         para  : "intermediate",
-        width : "w-[50%]"
+        width : "w-[55%]"
     },
     {
         name: "Python",
